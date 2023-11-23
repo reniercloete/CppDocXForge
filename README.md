@@ -14,7 +14,7 @@ Create, read and write Microsoft Office Word docx files.
 
 #### Quick Start
 
-See the [Examples](https://[github.com/reniercloete/CppDocXForge/blob/main/src/Examples.cpp])
+See the [Examples](https://github.com/reniercloete/CppDocXForge/blob/main/src/Examples.cpp)
 
 #### Requirements
 
