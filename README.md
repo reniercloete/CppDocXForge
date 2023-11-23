@@ -1,7 +1,9 @@
-#### Introduce
+#### CppDocXForge
+
 An upgraded version of minidocx that supports adding images
 
 #### Features
+
 Create, read and write Microsoft Office Word docx files.
 
 - Documents (docx) [Word]
@@ -12,12 +14,12 @@ Create, read and write Microsoft Office Word docx files.
 
 #### Quick Start
 
-See the examples: [Examples](https://github.com/tony2u/DocxX/tree/master/Test)
+See the [Examples](https://[github.com/reniercloete/CppDocXForge/blob/main/src/Examples.cpp])
 
 #### Requirements
 
 - [zip](https://github.com/kuba--/zip)
-- [pugixml](https://github.com/zeux/pugixml)
+- [pugixml](htps://github.com/zeux/pugixml)
 
 #### Licensing
 This library is available to anybody free of charge, under the terms of MIT License (see LICENSE.md).
