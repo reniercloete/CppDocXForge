@@ -31,56 +31,6 @@ dxfrg::operator<<( std::ostream& out, const Document& doc )
     return out;
 }
 
-//bool
-//CDocument::Save()
-//{
-//    /*if (!impl_) return false;
-//
-//    xml_string_writer writer;
-//    impl_->doc_.save( writer, "", pugi::format_raw );
-//    const char* buf = writer.result.c_str();*/
-//
-//    struct zip_t* zip = zip_open( mFilePath.c_str(), ZIP_DEFAULT_COMPRESSION_LEVEL, 'w');
-//    if (zip == nullptr) {
-//        return false;
-//    }
-//
-//    zip_entry_open( zip, "_rels/.rels" );
-//    zip_entry_write( zip, _RELS, std::strlen( _RELS ) );
-//    zip_entry_close( zip );
-//
-//    /*zip_entry_open(zip, "word/document.xml");
-//    zip_entry_write( zip, buf, std::strlen( buf ) );
-//    zip_entry_close( zip );*/
-//
-//    zip_entry_open( zip, "word/document.xml" );
-//    zip_entry_write( zip, DOCUMENT_XML, std::strlen( DOCUMENT_XML ) );
-//    zip_entry_close( zip );
-//
-//    zip_entry_open( zip, "word/_rels/document.xml.rels" );
-//    zip_entry_write( zip, DOCUMENT_XML_RELS, std::strlen( DOCUMENT_XML_RELS ) );
-//    zip_entry_close( zip );
-//
-//    /*zip_entry_open( zip, "word/fontTable.xml" );
-//    zip_entry_write( zip, DOCUMENT_XML_FONT_TABLE, std::strlen( DOCUMENT_XML_FONT_TABLE ) );
-//    zip_entry_close( zip );*/
-//
-//    zip_entry_open( zip, "docProps/app.xml" );
-//    zip_entry_write( zip, DOCPROPS_APP, std::strlen( DOCPROPS_APP ) );
-//    zip_entry_close( zip );
-//
-//    zip_entry_open( zip, "docProps/core.xml" );
-//    zip_entry_write( zip, DOCPROPS_CORE, std::strlen( DOCPROPS_CORE ) );
-//    zip_entry_close( zip );
-//
-//    zip_entry_open( zip, "[Content_Types].xml" );
-//    zip_entry_write( zip, CONTENT_TYPES_XML, std::strlen( CONTENT_TYPES_XML ) );
-//    zip_entry_close( zip );
-//
-//    zip_close( zip );
-//    return true;
-//}
-
 #define _RELS R"(<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/></Relationships>)"
 #define DOCUMENT_XML R"(<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:oel="http://schemas.microsoft.com/office/2019/extlst" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml" xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" mc:Ignorable="w14 w15 w16se w16cid w16 w16cex w16sdtdh wp14"><w:body><w:sectPr><w:pgSz w:w="11906" w:h="16838" /><w:pgMar w:top="1440" w:right="1800" w:bottom="1440" w:left="1800" w:header="851" w:footer="992" w:gutter="0" /><w:cols w:space="425" /><w:docGrid w:type="lines" w:linePitch="312" /></w:sectPr></w:body></w:document>)"
 #define CONTENT_TYPES_XML R"(<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="emf" ContentType="image/x-emf"/><Default Extension="png" ContentType="image/png"/><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" /><Default Extension="xml" ContentType="application/xml" /><Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml" /><Override PartName="/word/footer1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.footer+xml" /></Types>)"
@@ -153,7 +103,6 @@ bool Document::Save()
 
     zip_entry_open( zip, "word/_rels/document.xml.rels" );
     zip_entry_write( zip, buf, std::strlen( buf ) ); 
-    //zip_entry_write( zip, DOCUMENT_XML_RELS, std::strlen( DOCUMENT_XML_RELS ) );
     zip_entry_close( zip );
 
     zip_entry_open( zip, "word/footer1.xml" );
@@ -401,7 +350,7 @@ void Document::RemoveTable( Table& tbl )
 }
 
 Image 
-Document::AppendImage( /*const*/ double w, /*const*/ double h,
+Document::AppendImage( const double w, const double h,
                        const std::string& path )
 {
     if (!impl_) return Image();
@@ -427,21 +376,10 @@ Document::AppendImage( /*const*/ double w, /*const*/ double h,
     w_extent.append_attribute( "cx" ) = std::to_string( CM2Emu( w ) ).c_str();
     w_extent.append_attribute( "cy" ) = std::to_string( CM2Emu( h ) ).c_str();
     
-    /*auto w_effectExtent = w_inline.append_child("wp:effectExtent");
-	w_effectExtent.append_attribute( "l" ) = "0";
-	w_effectExtent.append_attribute( "t" ) = "0";
-	w_effectExtent.append_attribute( "r" ) = "2540";
-    w_effectExtent.append_attribute( "b" ) = "3175";*/
-
 	auto w_docPr = w_inline.append_child( "wp:docPr" );
     w_docPr.append_attribute( "id" ) = std::to_string( mIDCounter ).c_str();
 	w_docPr.append_attribute( "name" ) = "Picture 1";
 	w_docPr.append_attribute( "descr" ) = "Picture 1";
-
-	/*auto wp_cNvGraphicFramePr = w_inline.append_child( "cNvGraphicFramePr" );
-	auto a_graphicFrameLocks = wp_cNvGraphicFramePr.append_child( "a:graphicFrameLocks" );
-	a_graphicFrameLocks.append_attribute( "xmlns:a" ) = "http://schemas.openxmlformats.org/drawingml/2006/main";
-	a_graphicFrameLocks.append_attribute( "noChangeAspect" ) = "1";*/
 
 	auto wp_graphic = w_inline.append_child( "a:graphic" );
     wp_graphic.append_attribute( "xmlns:a" ) = "http://schemas.openxmlformats.org/drawingml/2006/main";
@@ -480,13 +418,10 @@ Document::AppendImage( /*const*/ double w, /*const*/ double h,
     auto a_avLst = a_prstGeom.append_child( "a:avLst" );/**/
 
     Image::Impl* impl = new Image::Impl;
-    //impl->w_framePr_ = w_framePr;
     auto image = Image( impl, paragraph_impl );
 
     mIDToImagePathMap[TextID] = path;
 
-    /*textFrame.SetSize( w, h );
-    textFrame.SetBorders();*/
     return image;
 }
 

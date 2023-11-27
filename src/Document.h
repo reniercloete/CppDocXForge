@@ -8,19 +8,6 @@
 
 namespace dxfrg
 {
-	/*class Document
-	{
-		friend std::ostream& operator<<( std::ostream& out, const Document& doc );
-	public:
-		Document( const std::string& FilePath ) :
-			mFilePath( FilePath )
-		{}
-
-		bool Save();
-	private:
-		std::string mFilePath = "";
-	};*/
-
     class Paragraph;
     class Section;
     class Table;
@@ -74,8 +61,8 @@ namespace dxfrg
         // add text frame
         TextFrame AppendTextFrame( const int w, const int h );
 
-        // add text frame
-        Image AppendImage( /*const*/ double w, /*const*/ double h,
+        // add an image of width w and height h
+        Image AppendImage( const double w, const double h,
                            const std::string& path );
 
     private:

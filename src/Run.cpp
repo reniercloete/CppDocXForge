@@ -2,6 +2,9 @@
 
 #include "XMLWriter.h"
 
+#include <sstream>
+#include <iomanip>
+
 using namespace dxfrg;
 
 std::ostream& 
@@ -77,7 +80,43 @@ void Run::AppendLineBreak()
     impl_->w_r_.append_child( "w:br" );
 }
 
-void Run::SetFontSize( const double fontSize )
+void 
+Run::SetFontColor( const unsigned int FontColor )
+{
+    if (!impl_) return;
+    auto sz = impl_->w_rPr_.child( "w:color" );
+    if (!sz) {
+        sz = impl_->w_rPr_.append_child( "w:color" );
+    }
+    auto szVal = sz.attribute( "w:val" );
+    if (!szVal) {
+        szVal = sz.append_attribute( "w:val" );
+    }
+
+    auto R = (FontColor & 0xFF0000) >> 16;
+    auto G = (FontColor & 0x00FF00) >> 8;
+    auto B = (FontColor & 0x0000FF);
+
+    std::stringstream stream;
+    stream << std::hex << std::setfill( '0' ) << std::setw( 2 ) << B << std::setw( 2 ) << G << std::setw( 2 ) << R;
+    std::string result( stream.str() );
+
+    szVal.set_value( result.c_str() );
+}
+
+unsigned int  
+Run::GetFontCOLOR()
+{
+    if (!impl_) return -1;
+    auto sz = impl_->w_rPr_.child( "w:color" );
+    if (!sz) return 0;
+    auto szVal = sz.attribute( "w:val" );
+    if (!szVal) return 0;
+    return szVal.as_uint();
+}
+
+void 
+Run::SetFontSize( const double fontSize )
 {
     if (!impl_) return;
     auto sz = impl_->w_rPr_.child( "w:sz" );
@@ -140,7 +179,49 @@ void Run::GetFont(
     if (rFontsEastAsia) fontEastAsia = rFontsEastAsia.value();
 }
 
-void Run::SetFontStyle( const FontStyle f )
+void 
+Run::SetVerticalAlign( const VerticalAlign Value )
+{
+    if (!impl_) return;
+    auto v = impl_->w_rPr_.child( "w:vertAlign" );
+
+    if (Value & SubScript) {
+        if (v.empty()) impl_->w_rPr_.append_child( "w:vertAlign" ).append_attribute( "w:val" ) = "subscript";
+    }
+    else {
+        impl_->w_rPr_.remove_child( v );
+    }
+
+    if (Value & SuperScript) {
+        if (v.empty()) impl_->w_rPr_.append_child( "w:vertAlign" ).append_attribute( "w:val" ) = "superscript";
+    }
+    else {
+        impl_->w_rPr_.remove_child( v );
+    }
+}
+
+Run::VerticalAlign 
+Run::GetVerticalAlign()
+{
+    VerticalAlign Value = Baseline;
+    if (!impl_) return Value;
+
+    auto v = impl_->w_rPr_.child( "w:vertAlign" );
+    if (v) {
+		auto val = v.attribute( "w:val" );
+		if (val) 
+        {
+			if (strcmp( val.value(), "subscript" ) == 0) 
+                Value = SubScript;
+			else if (strcmp( val.value(), "superscript" ) == 0) 
+                Value = SuperScript;
+		}
+	}
+    return Value;
+}
+
+void 
+Run::SetFontStyle( const FontStyle f )
 {
     if (!impl_) return;
     auto b = impl_->w_rPr_.child( "w:b" );

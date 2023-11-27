@@ -366,6 +366,30 @@ void BuildImageDocument( dxfrg::Document& Doc )
     Doc.AppendImage( 15.92086111, 12.47951389, "../bin/Example.emf" );
 }
 
+void BuildSuperSubDocument( dxfrg::Document& Doc )
+{
+    // Section 1
+    auto p = Doc.AppendParagraph();
+
+    auto r = p.AppendRun();
+    r.AppendText( "This is the 1" );
+    r = p.AppendRun();
+    r.SetVerticalAlign( dxfrg::Run::SubScript );
+    r.AppendText( "st" );
+    r = p.AppendRun();
+    r.AppendText( " line containing a subscript." );
+    r.AppendLineBreak();
+
+    r = p.AppendRun();
+    r.AppendText( "This is the 2" );
+    r = p.AppendRun();
+    r.SetVerticalAlign( dxfrg::Run::SuperScript );
+    r.AppendText( "nd" );
+    r = p.AppendRun();
+    r.AppendText( " line containing a superscript." );
+                  
+}
+
 int main()
 {
     dxfrg::Document Doc( "../bin/Test.docx" );
@@ -381,6 +405,7 @@ int main()
     //BuildAdvancedTableDocument( Doc );
     //BuildTextFrameDocument( Doc );
     //BuildTraverseDocument( Doc );
-    BuildImageDocument( Doc );
+    //BuildImageDocument( Doc );
+    BuildSuperSubDocument( Doc );
     Doc.Save();
 }

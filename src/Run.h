@@ -36,6 +36,18 @@ namespace dxfrg
             Underline = 4,
             Strikethrough = 8
         };
+
+        using VerticalAlign = unsigned int;
+        enum : VerticalAlign
+        {
+            Baseline = 1,
+            SubScript = 2,
+            SuperScript = 4
+        };
+
+        void SetFontColor( const unsigned int FontColor );
+        unsigned int GetFontCOLOR();
+        
         void SetFontSize( const double fontSize );
         double GetFontSize();
 
@@ -44,6 +56,9 @@ namespace dxfrg
 
         void SetFontStyle( const FontStyle fontStyle );
         FontStyle GetFontStyle();
+
+        void SetVerticalAlign( const VerticalAlign Value );
+        VerticalAlign GetVerticalAlign();
 
         void SetCharacterSpacing( const int characterSpacing );
         int GetCharacterSpacing();
