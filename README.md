@@ -4,7 +4,7 @@
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/reniercloete/CppDocXForge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/reniercloete/CppDocXForge)
 
-An upgraded version of [minidocx](https://github.com/totravel/minidocx) that supports adding images
+An upgraded version of [minidocx](https://github.com/totravel/minidocx).
 
 #### Features
 
