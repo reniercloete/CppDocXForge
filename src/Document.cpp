@@ -366,7 +366,7 @@ Document::AppendImage( const double w, const double h,
     paragraph_impl->w_pPr_ = w_pPr;
 
     auto w_drawing = w_r.append_child( "w:drawing" );
-    auto w_inline = w_drawing.append_child( "wp:inline" );
+    auto w_inline = w_drawing.append_child("wp:inline");
 	w_inline.append_attribute( "distT" ) = "0";
 	w_inline.append_attribute( "distB" ) = "0";
 	w_inline.append_attribute( "distL" ) = "0";
@@ -379,9 +379,9 @@ Document::AppendImage( const double w, const double h,
 	auto w_docPr = w_inline.append_child( "wp:docPr" );
     w_docPr.append_attribute( "id" ) = std::to_string( mIDCounter ).c_str();
 	w_docPr.append_attribute( "name" ) = "Picture 1";
-	w_docPr.append_attribute( "descr" ) = "Picture 1";
+	w_docPr.append_attribute( "descr" ) = "Picture 1";/**/
 
-	auto wp_graphic = w_inline.append_child( "a:graphic" );
+    auto wp_graphic = w_inline.append_child( "a:graphic" );
     wp_graphic.append_attribute( "xmlns:a" ) = "http://schemas.openxmlformats.org/drawingml/2006/main";
 	auto a_graphicData = wp_graphic.append_child( "a:graphicData" );
 	a_graphicData.append_attribute( "uri" ) = "http://schemas.openxmlformats.org/drawingml/2006/picture";
@@ -394,6 +394,114 @@ Document::AppendImage( const double w, const double h,
 	pic_cNvPr.append_attribute( "id" ) = std::to_string( mIDCounter ).c_str();
 	pic_cNvPr.append_attribute( "name" ) = "Picture 1";
 	pic_cNvPr.append_attribute( "descr" ) = "Picture 1";
+    auto pic_cNvPicPr = pic_nvPicPr.append_child( "pic:cNvPicPr" );
+    pic_cNvPicPr.text().set( "" );
+
+    std::string TextID = "rId" + std::to_string( mIDCounter + 1 );;
+    auto pic_blipFill = pic_pic.append_child( "pic:blipFill" );
+    auto a_blip = pic_blipFill.append_child( "a:blip" );
+    a_blip.append_attribute( "r:embed" ) = TextID.c_str();
+    auto a_stretch = pic_blipFill.append_child( "a:stretch" );
+    auto a_fillRect = a_stretch.append_child( "a:fillRect" );
+
+    auto pic_spPr = pic_pic.append_child( "pic:spPr" );
+    auto a_xfrm = pic_spPr.append_child( "a:xfrm" );
+    auto a_off = a_xfrm.append_child( "a:off" );
+    a_off.append_attribute( "x" ) = "0";
+    a_off.append_attribute( "y" ) = "0";
+    auto a_ext = a_xfrm.append_child( "a:ext" );
+    a_ext.append_attribute( "cx" ) = std::to_string( CM2Emu( w ) ).c_str();
+    a_ext.append_attribute( "cy" ) = std::to_string( CM2Emu( h ) ).c_str();
+
+    auto a_prstGeom = pic_spPr.append_child( "a:prstGeom" );
+    a_prstGeom.append_attribute( "prst" ) = "rect";
+    auto a_avLst = a_prstGeom.append_child( "a:avLst" );/**/
+
+    Image::Impl* impl = new Image::Impl;
+    auto image = Image( impl, paragraph_impl );
+
+    mIDToImagePathMap[TextID] = path;
+
+    return image;
+}
+
+Image
+Document::AppendImage( const double x, const double y,
+					   const double w, const double h,
+					   const std::string& path )
+{
+    if (!impl_) return Image();
+    ++mIDCounter;
+
+    auto w_p = impl_->w_body_.insert_child_before( "w:p", impl_->w_sectPr_ );
+    auto w_pPr = w_p.append_child( "w:pPr" );
+    auto w_r = w_p.append_child( "w:r" );
+
+    Paragraph::Impl* paragraph_impl = new Paragraph::Impl;
+    paragraph_impl->w_body_ = impl_->w_body_;
+    paragraph_impl->w_p_ = w_p;
+    paragraph_impl->w_pPr_ = w_pPr;
+
+    auto w_drawing = w_r.append_child( "w:drawing" );
+
+    auto wp_anchor = w_drawing.append_child( "wp:anchor" );
+    wp_anchor.append_attribute( "distT" ) = "0";
+    wp_anchor.append_attribute( "distB" ) = "0";
+    wp_anchor.append_attribute( "distL" ) = "114300";
+    wp_anchor.append_attribute( "distR" ) = "114300";
+    wp_anchor.append_attribute( "simplePos" ) = "0";
+    wp_anchor.append_attribute( "relativeHeight" ) = "251658240";
+    wp_anchor.append_attribute( "behindDoc" ) = "0";
+    wp_anchor.append_attribute( "locked" ) = "0";
+    wp_anchor.append_attribute( "layoutInCell" ) = "1";
+    wp_anchor.append_attribute( "allowOverlap" ) = "1";
+
+    auto wp_simplePos = wp_anchor.append_child( "wp:simplePos" );
+    wp_simplePos.append_attribute( "x" ) = "0";
+    wp_simplePos.append_attribute( "y" ) = "0";
+
+    auto wp_positionH = wp_anchor.append_child( "wp:positionH" );
+    wp_positionH.append_attribute( "relativeFrom" ) = "page";
+    auto wp_posOffset = wp_positionH.append_child( "wp:posOffset" );
+    wp_posOffset.text().set( std::to_string(CM2Emu(x)).c_str() /*"4695190"*/);//13//
+
+    auto wp_positionV = wp_anchor.append_child( "wp:positionV" );
+    wp_positionV.append_attribute( "relativeFrom" ) = "page";
+    auto wp_posOffset2 = wp_positionV.append_child( "wp:posOffset" );
+    wp_posOffset2.text().set( std::to_string(CM2Emu(y)).c_str() /*"0"*/);
+
+    auto w_extent = wp_anchor.append_child( "wp:extent" );
+    w_extent.append_attribute( "cx" ) = std::to_string( CM2Emu( w ) ).c_str();
+    w_extent.append_attribute( "cy" ) = std::to_string( CM2Emu( h ) ).c_str();
+
+    auto wp_effectExtent = wp_anchor.append_child( "wp:effectExtent" );
+    wp_effectExtent.append_attribute( "l" ) = "0";
+    wp_effectExtent.append_attribute( "t" ) = "0";
+    wp_effectExtent.append_attribute( "r" ) = "0";
+    wp_effectExtent.append_attribute( "b" ) = "0";
+
+    auto wp_wrapnone = wp_anchor.append_child( "wp:wrapNone" );
+
+    auto w_docPr = wp_anchor.append_child( "wp:docPr" );
+    w_docPr.append_attribute( "id" ) = std::to_string( mIDCounter ).c_str();
+    w_docPr.append_attribute( "name" ) = "Picture 1";
+    w_docPr.append_attribute( "descr" ) = "Picture 1";/**/
+
+    auto wp_cNvGraphicFramePr = wp_anchor.append_child( "wp:cNvGraphicFramePr" );
+
+    auto wp_graphic = wp_anchor.append_child( "a:graphic" );
+    wp_graphic.append_attribute( "xmlns:a" ) = "http://schemas.openxmlformats.org/drawingml/2006/main";
+    auto a_graphicData = wp_graphic.append_child( "a:graphicData" );
+    a_graphicData.append_attribute( "uri" ) = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+
+    auto pic_pic = a_graphicData.append_child( "pic:pic" );
+    pic_pic.append_attribute( "xmlns:pic" ) = "http://schemas.openxmlformats.org/drawingml/2006/picture";
+
+    auto pic_nvPicPr = pic_pic.append_child( "pic:nvPicPr" );
+    auto pic_cNvPr = pic_nvPicPr.append_child( "pic:cNvPr" );
+    pic_cNvPr.append_attribute( "id" ) = std::to_string( mIDCounter ).c_str();
+    pic_cNvPr.append_attribute( "name" ) = "Picture 1";
+    pic_cNvPr.append_attribute( "descr" ) = "Picture 1";
     auto pic_cNvPicPr = pic_nvPicPr.append_child( "pic:cNvPicPr" );
     pic_cNvPicPr.text().set( "" );
 

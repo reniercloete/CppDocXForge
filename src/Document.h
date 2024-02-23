@@ -65,6 +65,11 @@ namespace dxfrg
         Image AppendImage( const double w, const double h,
                            const std::string& path );
 
+        // add an image of width w and height h
+        Image AppendImage( const double x, const double y, 
+                           const double w, const double h,
+                           const std::string& path );
+
     private:
         struct Impl;
         Impl* impl_ = nullptr;

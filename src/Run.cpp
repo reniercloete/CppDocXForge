@@ -98,7 +98,11 @@ Run::SetFontColor( const unsigned int FontColor )
     auto B = (FontColor & 0x0000FF);
 
     std::stringstream stream;
-    stream << std::hex << std::setfill( '0' ) << std::setw( 2 ) << B << std::setw( 2 ) << G << std::setw( 2 ) << R;
+    stream 
+        << std::hex << std::setfill( '0' ) 
+        << std::setw( 2 ) << B 
+        << std::setw( 2 ) << G 
+        << std::setw( 2 ) << R;
     std::string result( stream.str() );
 
     szVal.set_value( result.c_str() );
