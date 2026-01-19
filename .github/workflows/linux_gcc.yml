@@ -1,0 +1,30 @@
+name: GCC
+
+on:
+  push:   
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    if: ${{ !github.event.pull_request.draft }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Dependencies
+      run: |
+        sudo apt-get update && sudo apt-get install -yq g++-13
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 100 --slave /usr/bin/g++ g++ /usr/bin/g++-13
+    - name: Setup
+      run: |
+        mkdir bin
+        cd bin
+        cmake ..
+        cd ..
+    - name: Build
+      run: |
+        cd bin
+        make -j 4 -k && make install
