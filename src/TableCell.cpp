@@ -1,5 +1,7 @@
+#include <cstring>
+#include <sstream>
+#include <iomanip>
 #include "TableCell.h"
-
 #include "Paragraph.h"
 
 using namespace dxfrg;
@@ -178,4 +180,48 @@ Paragraph TableCell::FirstParagraph()
     impl->w_p_ = w_p;
     impl->w_pPr_ = w_pPr;
     return Paragraph( impl );
+}
+
+void TableCell::SetBackGroundColor( const unsigned int BackGroundColor )
+{
+    if (!impl_) return;
+    auto sz = impl_->w_tcPr_.child( "w:shd" );
+    if (!sz) {
+        sz = impl_->w_tcPr_.append_child( "w:shd" );
+    }
+    auto szFill = sz.attribute( "w:fill" );
+    if (!szFill) {
+        szFill = sz.append_attribute( "w:fill" );
+    }
+    auto szVal = sz.attribute( "w:val" );
+    if (!szVal) {
+        szVal = sz.append_attribute( "w:val" );
+    }
+
+    auto R = (BackGroundColor & 0xFF0000) >> 16;
+    auto G = (BackGroundColor & 0x00FF00) >> 8;
+    auto B = (BackGroundColor & 0x0000FF);
+
+    constexpr char characters[] = "0123456789ABCDEF";
+    char result[6];
+    std::memset(result, 0, 6);
+    result[0] = characters[ B >> 4 ];
+    result[1] = characters[ B & 0x0F] ;
+    result[2] = characters[ G >> 4 ];
+    result[3] = characters[ G & 0x0F ];
+    result[4] = characters[ R >> 4 ];
+    result[5] = characters[ R & 0x0F ];
+
+    szFill.set_value( result );
+    szVal.set_value( "clear" );
+}
+
+unsigned int
+TableCell::GetBackGroundColor()
+{
+    if (!impl_) return -1;
+    auto sz = impl_->w_tcPr_.child( "w:shd" );
+    if (!sz) return 0;
+    auto szFill = sz.attribute( "w:fill" );
+    return szFill.as_uint();
 }
