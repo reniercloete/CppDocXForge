@@ -1,3 +1,4 @@
+#include <cstring>
 #include "Utils.h"
 
 namespace dxfrg

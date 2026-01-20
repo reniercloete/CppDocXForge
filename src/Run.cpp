@@ -1,3 +1,4 @@
+#include <cstring>
 #include "Run.h"
 
 #include "XMLWriter.h"

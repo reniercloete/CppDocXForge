@@ -22,7 +22,7 @@ jobs:
       run: |
         mkdir bin
         cd bin
-        cmake ..
+        cmake .. -DCMAKE_INSTALL_PREFIX=check_install
         cd ..
     - name: Build
       run: |

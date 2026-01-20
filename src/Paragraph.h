@@ -105,5 +105,5 @@ namespace dxfrg
         pugi::xml_node w_pPr_;
     };
 
-    bool dxfrg::operator==( const Paragraph& left, const Paragraph& right );
+    bool operator==( const Paragraph& left, const Paragraph& right );
 }

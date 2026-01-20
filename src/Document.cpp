@@ -1,4 +1,5 @@
-﻿#include "Document.h"
+﻿#include <cstring>
+#include "Document.h"
 
 //#include "DocumentBoilerPlatePar.h"
 #include "XMLWriter.h"
