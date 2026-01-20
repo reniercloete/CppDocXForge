@@ -33,6 +33,9 @@ namespace dxfrg
         Paragraph AppendParagraph();
         Paragraph FirstParagraph();
 
+        void SetBackGroundColor( const unsigned int BackGroundColor );
+        unsigned int GetBackGroundColor();
+
     private:
         struct Impl;
         Impl* impl_ = nullptr;
