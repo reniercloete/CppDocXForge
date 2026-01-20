@@ -3,6 +3,7 @@
 ![License](https://img.shields.io/github/license/reniercloete/CppDocXForge)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/reniercloete/CppDocXForge)
 ![GitHub last commit](https://img.shields.io/github/last-commit/reniercloete/CppDocXForge)
+[![linux-gcc-build](https://github.com/reniercloete/CppDocXForge/actions/workflows/linux_gcc.yml/badge.svg?branch=main)](https://github.com/reniercloete/CppDocXForge/actions/workflows/linux_gcc.yml)
 
 An upgraded version of [minidocx](https://github.com/totravel/minidocx).
 
@@ -25,6 +26,5 @@ See the [Examples](https://github.com/reniercloete/CppDocXForge/blob/main/src/Ex
 - [zip](https://github.com/kuba--/zip)
 - [pugixml](https://github.com/zeux/pugixml)
 
-  
 #### Licensing
 This library is available to anybody free of charge, under the terms of BSD-3-clause license (see LICENSE.md).
