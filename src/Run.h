@@ -63,6 +63,9 @@ namespace dxfrg
         void SetCharacterSpacing( const int characterSpacing );
         int GetCharacterSpacing();
 
+        void SetBackGroundColor( const unsigned int BackGroundColor );
+        unsigned int GetBackGroundColor();
+
         // Run
         void Remove();
         bool IsPageBreak();
